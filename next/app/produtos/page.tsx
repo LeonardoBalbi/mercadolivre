@@ -97,7 +97,7 @@ export default function Produtos() {
 
       {sortedProducts.length === 0 ? (
         <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded-lg text-center">
-          Nenhum produto encontrado com o termo "{searchTerm}"
+          Nenhum produto encontrado com o termo &quot;{searchTerm}&quot;
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
