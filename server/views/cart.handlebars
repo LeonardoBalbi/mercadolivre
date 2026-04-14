@@ -1,0 +1,62 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Olá, {{user}}</span>
+      <a href="/" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+      <a href="/user" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-bag-shopping"></i>
+        Compras
+      </a>
+      <a href="/logout" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sair
+      </a>
+    </div>
+  </div>
+  </header>
+
+<main class="main">
+  <div class="container" style="max-width:960px;">
+    <h1 class="section-title">Meu carrinho</h1>
+    {{#if items.length}}
+    <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+      {{#each items}}
+      <div class="product-card" style="display:grid; grid-template-columns: 120px 1fr auto; gap:12px; align-items:center;">
+        <img src="{{this.product.image}}" alt="{{this.product.title}}" style="width:120px; height:120px; object-fit:cover; border-radius:8px;">
+        <div>
+          <h3 class="product-title">{{this.product.title}}</h3>
+          <div class="product-price">{{formatBRL this.unitFinal}}</div>
+          <div class="product-discount">Qtd: {{this.quantity}}</div>
+          <div style="margin-top:6px;">Item: {{formatBRL this.total}}</div>
+        </div>
+        <form action="/cart/remove/{{this.id}}" method="post">
+          <button class="search-btn">Remover</button>
+        </form>
+      </div>
+      {{/each}}
+    </div>
+    <div style="margin-top:16px; font-size:22px; font-weight:600; color:#00a650;">Total: {{formatBRL grandTotal}}</div>
+    <form action="/cart/checkout" method="post" style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+      <div>
+        <strong>Forma de pagamento</strong>
+        <div style="display:flex; gap:12px; margin-top:6px;">
+          <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="method" value="Cartão" checked> Cartão</label>
+          <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="method" value="Boleto"> Boleto</label>
+          <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="method" value="Pix"> Pix</label>
+        </div>
+      </div>
+      <button type="submit" class="search-btn" style="align-self:flex-start;">Finalizar compra</button>
+    </form>
+    {{else}}
+    <p style="color:#777;">Seu carrinho está vazio.</p>
+    {{/if}}
+  </div>
+  </main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

@@ -1,0 +1,64 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Olá, {{user}}</span>
+      <a href="/logout" class="search-btn" style="text-decoration:none;">Sair</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container" style="max-width:960px;">
+    <h2 class="section-title">Perguntas</h2>
+    <form action="/user/questions" method="post" style="display:flex; gap:8px; margin-bottom:12px;">
+      <input type="text" id="questionsProductFilter" class="search-input" placeholder="Filtrar produtos" style="max-width:300px;">
+      <input type="text" id="questionsProductAC" class="search-input" placeholder="Buscar e selecionar" style="max-width:300px;" list="questionsProductsList">
+      <datalist id="questionsProductsList">
+        {{#each products}}
+          <option value="{{this.title}}"></option>
+        {{/each}}
+      </datalist>
+      <select id="questionsProductSelect" name="product_id" class="search-input" style="max-width:300px;">
+        {{#each products}}
+          <option value="{{this.id}}">{{this.title}}</option>
+        {{/each}}
+      </select>
+      <input type="text" name="content" placeholder="Sua pergunta" class="search-input" required>
+      <button type="submit" class="search-btn">Enviar</button>
+    </form>
+    <form action="/user/questions" method="get" style="display:flex; gap:8px; margin-bottom:12px;">
+      <input type="text" name="q" value="{{q}}" placeholder="Filtrar por produto" class="search-input" style="flex:1;">
+      <button type="submit" class="search-btn">Buscar</button>
+    </form>
+    {{#if questions.length}}
+    <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+      {{#each questions}}
+      <div class="product-card" style="display:grid; grid-template-columns: 120px 1fr; gap:12px;">
+        {{#if this.product}}
+        <img src="{{this.product.image}}" alt="{{this.product.title}}" style="width:120px; height:120px; object-fit:cover; border-radius:8px;">
+        {{/if}}
+        <div>
+          <div class="product-title">{{#if this.product}}{{this.product.title}}{{/if}}</div>
+          <div style="margin-top:6px;">{{this.content}}</div>
+          <div style="color:#777;">{{this.created_at}}</div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p style="color:#777;">Você ainda não fez perguntas.</p>
+    {{/if}}
+    {{#if pages}}
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        {{#each (range 1 pages)}}
+          <a href="/user/questions?page={{this}}{{#if ../q}}&q={{../q}}{{/if}}" class="search-btn" style="text-decoration:none;">{{this}}</a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

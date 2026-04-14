@@ -1,0 +1,78 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Olá, {{user}}</span>
+      <a href="/user/products/new" class="search-btn" style="text-decoration:none;">Cadastrar produto</a>
+      <a href="/logout" class="search-btn" style="text-decoration:none;">Sair</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container">
+    <h2 class="section-title">Meus produtos</h2>
+    <form action="/user/products" method="get" style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; align-items:center;">
+      <input type="hidden" name="state" value="{{state}}">
+      <input type="text" name="q" value="{{q}}" placeholder="Buscar por título" class="search-input" style="flex:1; min-width:220px;">
+      <label style="display:flex; gap:6px; align-items:center;">
+        <span>Ordenar</span>
+        <select name="sort" class="search-input">
+          <option value="recent" {{#if (eq sort 'recent')}}selected{{/if}}>Mais recentes</option>
+          <option value="price_asc" {{#if (eq sort 'price_asc')}}selected{{/if}}>Menor preço</option>
+          <option value="price_desc" {{#if (eq sort 'price_desc')}}selected{{/if}}>Maior preço</option>
+          <option value="discount_desc" {{#if (eq sort 'discount_desc')}}selected{{/if}}>Maior desconto</option>
+          <option value="discount_asc" {{#if (eq sort 'discount_asc')}}selected{{/if}}>Menor desconto</option>
+          <option value="title_asc" {{#if (eq sort 'title_asc')}}selected{{/if}}>Título A–Z</option>
+          <option value="title_desc" {{#if (eq sort 'title_desc')}}selected{{/if}}>Título Z–A</option>
+        </select>
+      </label>
+      <label style="display:flex; gap:6px; align-items:center;">
+        <span>Itens/página</span>
+        <select name="pageSize" class="search-input">
+          <option value="6" {{#if (eq pageSize '6')}}selected{{/if}}>6</option>
+          <option value="12" {{#if (eq pageSize '12')}}selected{{/if}}>12</option>
+          <option value="24" {{#if (eq pageSize '24')}}selected{{/if}}>24</option>
+          <option value="48" {{#if (eq pageSize '48')}}selected{{/if}}>48</option>
+        </select>
+      </label>
+      <button type="submit" class="search-btn">Aplicar</button>
+    </form>
+    <div style="margin-bottom:12px; display:flex; gap:6px; flex-wrap:wrap;">
+      <a href="/user/products?state=published{{#if q}}&q={{q}}{{/if}}" class="search-btn" style="text-decoration:none; {{#if (eq state 'published')}}background:#FDE600;color:#222;{{/if}}">Publicados</a>
+      <a href="/user/products?state=drafts{{#if q}}&q={{q}}{{/if}}" class="search-btn" style="text-decoration:none; {{#if (eq state 'drafts')}}background:#FDE600;color:#222;{{/if}}">Rascunhos</a>
+      <a href="/user/products?state=all{{#if q}}&q={{q}}{{/if}}" class="search-btn" style="text-decoration:none; {{#if (eq state 'all')}}background:#FDE600;color:#222;{{/if}}">Todos</a>
+    </div>
+    <div class="products-grid" id="productsGrid">
+      {{#each products}}
+      <div class="product-card" style="position:relative;">
+        <img src="{{this.image}}" alt="{{this.title}}" class="product-image">
+        <h3 class="product-title">{{this.title}}</h3>
+        <div class="product-price">{{formatBRL this.price}}</div>
+        <div class="product-discount">{{this.discount}}% OFF • {{#if this.published}}Publicado{{else}}Rascunho{{/if}}</div>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <a href="/user/products/{{this.id}}/edit" class="search-btn" style="text-decoration:none;">Editar</a>
+          <form action="/user/products/{{this.id}}/delete" method="post" onsubmit="return confirm('Excluir este produto?');">
+            <button type="submit" class="search-btn" style="background:#ffeded; color:#b00000;">Excluir</button>
+          </form>
+          <form action="/user/products/{{this.id}}/publish" method="post">
+            <input type="hidden" name="state" value="{{#if this.published}}off{{else}}on{{/if}}">
+            <button type="submit" class="search-btn">{{#if this.published}}Despublicar{{else}}Publicar{{/if}}</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{#if pages}}
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        {{#each (range 1 pages)}}
+          <a href="/user/products?page={{this}}&state={{../state}}{{#if ../q}}&q={{../q}}{{/if}}&sort={{../sort}}&pageSize={{../pageSize}}" class="search-btn" style="text-decoration:none;">{{this}}</a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

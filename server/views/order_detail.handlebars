@@ -1,0 +1,49 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <a href="/admin/orders" class="search-btn" style="text-decoration:none;">Pedidos</a>
+      <a href="/admin/customers" class="search-btn" style="text-decoration:none;">Clientes</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container" style="max-width:960px;">
+    <h2 class="section-title">Pedido #{{order.id}}</h2>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+      <div>
+        {{#if product}}
+        <img src="{{product.image}}" alt="{{product.title}}" style="width:100%; border-radius:8px;">
+        <h3 class="product-title" style="margin-top:12px;">{{product.title}}</h3>
+        {{/if}}
+        <div class="product-price">Total: {{formatBRL order.total}}</div>
+        <div class="product-discount">Qtd: {{order.quantity}} • {{order.method}} • {{order.status}}</div>
+      </div>
+      <div>
+        <h3 class="section-title">Atualizar status</h3>
+        <form action="/admin/orders/{{order.id}}/status" method="post" style="display:flex; gap:8px; align-items:center;">
+          <select name="status" class="search-input" style="max-width:240px;">
+            <option value="PROCESSANDO">PROCESSANDO</option>
+            <option value="ENVIADO">ENVIADO</option>
+            <option value="ENTREGUE">ENTREGUE</option>
+            <option value="CANCELADO">CANCELADO</option>
+          </select>
+          <button type="submit" class="search-btn">Salvar</button>
+        </form>
+        <div style="margin-top:16px;">
+          <strong>Histórico</strong>
+          <ul style="margin:8px 0 0 18px;">
+            {{#each statuses}}
+              <li>{{this.status}} — {{this.created_at}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

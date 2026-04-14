@@ -1,0 +1,49 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Olá, {{user}}</span>
+      <a href="/logout" class="search-btn" style="text-decoration:none;">Sair</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container" style="max-width:960px;">
+    <h2 class="section-title">Histórico de pedidos</h2>
+    <form action="/user/history" method="get" style="display:flex; gap:8px; margin-bottom:12px;">
+      <input type="text" name="q" value="{{q}}" placeholder="Filtrar por produto" class="search-input" style="flex:1;">
+      <button type="submit" class="search-btn">Buscar</button>
+    </form>
+    {{#if orders.length}}
+    <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+      {{#each orders}}
+      <div class="product-card" style="display:grid; grid-template-columns: 120px 1fr auto; gap:12px; align-items:center;">
+        {{#if this.product}}
+        <img src="{{this.product.image}}" alt="{{this.product.title}}" style="width:120px; height:120px; object-fit:cover; border-radius:8px;">
+        {{/if}}
+        <div>
+          <div class="product-title">Pedido #{{this.id}} • {{#if this.product}}{{this.product.title}}{{/if}}</div>
+          <div class="product-price">{{formatBRL this.total}}</div>
+          <div class="product-discount">{{this.status}}</div>
+        </div>
+        <a href="/orders/{{this.id}}" class="search-btn" style="text-decoration:none;">Detalhes</a>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p style="color:#777;">Nenhum pedido encontrado.</p>
+    {{/if}}
+    {{#if pages}}
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        {{#each (range 1 pages)}}
+          <a href="/user/history?page={{this}}{{#if ../q}}&q={{../q}}{{/if}}" class="search-btn" style="text-decoration:none;">{{this}}</a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

@@ -1,0 +1,46 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <input type="text" id="searchInput" value="{{q}}" placeholder="Buscar produtos... " class="search-input">
+      <button id="searchBtn" class="search-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <a href="/admin/customers/new" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-user-plus"></i>
+        Cadastrar clientes
+      </a>
+      <a href="/admin/customers" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-users"></i>
+        Lista de clientes
+      </a>
+    </div>
+  </div>
+  </header>
+
+<main class="main">
+  <div class="container">
+    <h2 class="section-title">Resultados para "{{q}}" ({{total}})</h2>
+    <div class="products-grid" id="productsGrid">
+      {{#each products}}
+      <div class="product-card">
+        <img src="{{this.image}}" alt="{{this.title}}" class="product-image">
+        <h3 class="product-title">{{this.title}}</h3>
+        <div class="product-price">{{formatBRL this.price}}</div>
+        <div class="product-discount">{{this.discount}}% OFF</div>
+      </div>
+      {{/each}}
+    </div>
+    {{#if pages}}
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        {{#each (range 1 pages)}}
+          <a href="/search?q={{../q}}&page={{this}}" class="search-btn" style="text-decoration:none;">{{this}}</a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

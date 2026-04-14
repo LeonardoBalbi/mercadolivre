@@ -1,0 +1,95 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <input type="text" id="searchInput" placeholder="Buscar produtos... " class="search-input">
+      <button id="searchBtn" class="search-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <div id="userMenuWrap" style="position:relative;">
+        <a href="#" id="userMenuBtn" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+          <i class="fa-solid fa-user-circle"></i>
+          {{user}}
+          <i class="fa-solid fa-chevron-down"></i>
+        </a>
+        <div id="userMenu" style="position:absolute; top:calc(100% + 6px); right:0; background:#fff; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.2); width:280px; padding:8px; display:none; z-index:10;">
+          <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-bottom:1px solid #eee;">
+            <div style="width:32px; height:32px; border-radius:50%; background:#ddd; display:flex; align-items:center; justify-content:center; font-weight:600;">{{user.[0]}}</div>
+            <div>
+              <div style="font-weight:600;">{{user}}</div>
+              <a href="/user" style="color:#0077ff; text-decoration:none;">Meu perfil</a>
+            </div>
+          </div>
+          <a href="/user" class="search-btn" style="text-decoration:none; display:block; margin-top:8px;">Compras</a>
+          <a href="/user/history" class="search-btn" style="text-decoration:none; display:block; margin-top:8px;">Histórico</a>
+          <a href="/user/products" class="search-btn" style="text-decoration:none; display:block; margin-top:8px;">Meus produtos</a>
+          <a href="/user/questions" class="search-btn" style="text-decoration:none; display:block; margin-top:8px;">Perguntas</a>
+          <a href="/user/reviews" class="search-btn" style="text-decoration:none; display:block; margin-top:8px;">Opiniões</a>
+          <a href="/user/gifts" class="search-btn" style="text-decoration:none; display:block; margin-top:8px;">Listas de presentes</a>
+          <a href="/admin/products" class="search-btn" style="text-decoration:none; display:block; margin-top:8px; background:#FDE600;">Vender</a>
+        </div>
+      </div>
+      <a href="/logout" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sair
+      </a>
+      <a href="/admin/customers" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-users"></i>
+        Lista de clientes
+      </a>
+    </div>
+  </div>
+  </header>
+
+<main class="main">
+  <div class="container">
+    <h2 class="section-title">Favoritos</h2>
+    <div class="products-grid" id="productsGrid">
+      {{#each products}}
+      <a href="/products/{{this.id}}" class="product-card" style="text-decoration:none;color:inherit;">
+        <img src="{{this.image}}" alt="{{this.title}}" class="product-image">
+        <h3 class="product-title">{{this.title}}</h3>
+        <div class="product-price">{{formatBRL this.price}}</div>
+        <div class="product-discount">{{this.discount}}% OFF</div>
+      </a>
+      {{/each}}
+    </div>
+    <h2 class="section-title" style="margin-top:24px;">Minhas compras</h2>
+    <div class="products-grid">
+      {{#each orders}}
+      <div class="product-card">
+        {{#if this.product}}
+        <img src="{{this.product.image}}" alt="{{this.product.title}}" class="product-image">
+        <h3 class="product-title">{{this.product.title}}</h3>
+        {{/if}}
+        <div class="product-price">Total: {{formatBRL this.total}}</div>
+        <div class="product-discount">Qtd: {{this.quantity}} • {{this.method}} • {{this.status}}</div>
+        {{#if this.statuses.length}}
+        <div style="margin-top:6px;">
+          <strong>Status do pedido</strong>
+          <ul style="margin:8px 0 0 18px;">
+            {{#each this.statuses}}
+              <li>{{this.status}} — {{this.created_at}}</li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+    <h2 class="section-title" style="margin-top:24px;">Clientes cadastrados</h2>
+    <div class="products-grid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+      {{#each customers}}
+      <div class="product-card">
+        <h3 class="product-title">{{this.name}}</h3>
+        <div class="product-price">{{this.email}}</div>
+        <div class="product-discount">{{this.phone}}</div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

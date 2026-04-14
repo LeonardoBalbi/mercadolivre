@@ -1,0 +1,28 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <a href="/admin/customers" class="search-btn" style="text-decoration:none;">Lista de clientes</a>
+      <a href="/admin/customers/new" class="search-btn" style="text-decoration:none;">Cadastrar clientes</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container" style="max-width:640px;">
+    <h2 class="section-title">Editar Cliente</h2>
+    {{#if error}}
+      <div style="background:#ffecec;color:#b00000;padding:10px;border-radius:6px;margin-bottom:10px;">{{error}}</div>
+    {{/if}}
+    <form action="/admin/customers/{{customer.id}}/update" method="post" style="display:flex;flex-direction:column;gap:12px;">
+      <input type="text" name="name" value="{{customer.name}}" placeholder="Nome completo" class="search-input" required>
+      <input type="email" name="email" value="{{customer.email}}" placeholder="E-mail" class="search-input" required>
+      <input type="tel" name="phone" value="{{customer.phone}}" placeholder="Telefone" class="search-input" required>
+      <button type="submit" class="search-btn">Salvar</button>
+    </form>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+  </footer>

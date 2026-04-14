@@ -1,0 +1,59 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <a href="/" class="search-btn" style="text-decoration:none;">Home</a>
+      <a href="/admin/customers" class="search-btn" style="text-decoration:none;">Clientes</a>
+      <a href="/admin/orders" class="search-btn" style="text-decoration:none;">Pedidos</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container">
+    <h2 class="section-title">Pedidos</h2>
+    <form action="/admin/orders" method="get" style="display:flex;gap:8px;margin-bottom:12px;">
+      <input type="text" name="q" value="{{q}}" placeholder="Filtrar por status" class="search-input" style="flex:1;">
+      <button type="submit" class="search-btn">Buscar</button>
+    </form>
+    <div style="overflow:auto;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:10px;">Pedido</th>
+            <th style="text-align:left; padding:10px;">Produto</th>
+            <th style="text-align:left; padding:10px;">Qtd</th>
+            <th style="text-align:left; padding:10px;">Total</th>
+            <th style="text-align:left; padding:10px;">Status</th>
+            <th style="text-align:left; padding:10px;">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each orders}}
+            <tr style="background:#fff;">
+              <td style="padding:10px;">#{{this.id}}</td>
+              <td style="padding:10px;">{{#if this.product}}{{this.product.title}}{{/if}}</td>
+              <td style="padding:10px;">{{this.quantity}}</td>
+              <td style="padding:10px;">{{formatBRL this.total}}</td>
+              <td style="padding:10px;">{{this.status}}</td>
+              <td style="padding:10px;">
+                <a href="/admin/orders/{{this.id}}" class="search-btn" style="text-decoration:none;">Editar</a>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{#if pages}}
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        {{#each (range 1 pages)}}
+          <a href="/admin/orders?page={{this}}{{#if ../q}}&q={{../q}}{{/if}}" class="search-btn" style="text-decoration:none;">{{this}}</a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

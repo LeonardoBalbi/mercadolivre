@@ -1,0 +1,69 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Olá, {{user}}</span>
+      <a href="/logout" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sair
+      </a>
+    </div>
+  </div>
+  </header>
+
+<main class="main">
+  <div class="container" style="max-width:960px;">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+      <div>
+        <img src="{{product.image}}" alt="{{product.title}}" style="width:100%; border-radius:8px;">
+      </div>
+      <div>
+        <h1 class="section-title">{{product.title}}</h1>
+        <div style="font-size:22px; font-weight:600; color:#00a650;">{{formatBRL finalPrice}}</div>
+        {{#if product.discount}}
+          <div style="color:#888; margin-top:4px;">De {{formatBRL product.price}} por {{product.discount}}% OFF</div>
+        {{/if}}
+        <div style="margin-top:12px;">
+          <strong>Meios de pagamento</strong>
+          <ul style="margin:8px 0 0 18px;">
+            <li>Cartão de crédito: até 12x de {{formatBRL installment}}</li>
+            <li>Boleto bancário</li>
+            <li>Pix</li>
+          </ul>
+        </div>
+        <form action="/purchase" method="post" style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+          <input type="hidden" name="product_id" value="{{product.id}}">
+          <label style="display:flex; flex-direction:column; gap:6px;">
+            <span>Quantidade</span>
+            <input type="number" name="quantity" value="1" min="1" class="search-input" style="max-width:120px;">
+          </label>
+          <div>
+            <strong>Forma de pagamento</strong>
+            <div style="display:flex; gap:12px; margin-top:6px;">
+              <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="method" value="Cartão" checked> Cartão</label>
+              <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="method" value="Boleto"> Boleto</label>
+              <label style="display:flex; align-items:center; gap:6px;"><input type="radio" name="method" value="Pix"> Pix</label>
+            </div>
+          </div>
+          <button type="submit" class="search-btn" style="align-self:flex-start;">Comprar agora</button>
+        </form>
+        <form action="/cart/add" method="post" style="margin-top:8px; display:flex; gap:8px; align-items:center;">
+          <input type="hidden" name="product_id" value="{{product.id}}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="search-btn" style="align-self:flex-start;">Adicionar ao carrinho</button>
+          <a href="/cart" class="search-btn" style="text-decoration:none;">Ir para o carrinho</a>
+        </form>
+      </div>
+    </div>
+    {{#if product.description}}
+    <div style="margin-top:24px;">
+      <h2 class="section-title">Descrição</h2>
+      <p>{{product.description}}</p>
+    </div>
+    {{/if}}
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

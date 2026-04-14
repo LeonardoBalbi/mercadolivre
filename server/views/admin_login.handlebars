@@ -1,0 +1,25 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <a href="/" class="search-btn" style="text-decoration:none;">Home</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container" style="max-width:480px;">
+    <h2 class="section-title">Entrar como admin</h2>
+    {{#if error}}
+      <div style="color:#b00020; margin-bottom:12px;">{{error}}</div>
+    {{/if}}
+    <form method="post" action="/admin/login" style="display:flex; flex-direction:column; gap:12px;">
+      <input type="password" name="code" placeholder="Código de acesso" class="search-input" required>
+      <button type="submit" class="search-btn" style="align-self:flex-start;">Entrar</button>
+    </form>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

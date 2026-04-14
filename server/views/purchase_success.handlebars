@@ -1,0 +1,46 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Olá, {{user}}</span>
+      <a href="/" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+      <a href="/logout" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sair
+      </a>
+    </div>
+  </div>
+  </header>
+
+<main class="main">
+  <div class="container" style="max-width:960px;">
+    <h1 class="section-title">Compra confirmada</h1>
+    {{#if orderId}}
+    <div style="margin-top:8px; color:#777;">Pedido #{{orderId}}</div>
+    {{/if}}
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+      <div>
+        <img src="{{product.image}}" alt="{{product.title}}" style="width:100%; border-radius:8px;">
+      </div>
+      <div>
+        <h2 class="section-title" style="margin-bottom:12px;">{{product.title}}</h2>
+        <div style="color:#888;">Preço unitário: {{formatBRL unitFinal}}</div>
+        <div style="margin-top:8px;">Quantidade: {{quantity}}</div>
+        <div style="margin-top:8px;">Forma de pagamento: {{method}}</div>
+        <div style="margin-top:12px; font-size:22px; font-weight:600; color:#00a650;">Total: {{formatBRL total}}</div>
+        <div style="margin-top:16px; color:#777;">Você receberá um e-mail com os detalhes da sua compra.</div>
+      </div>
+    </div>
+    <div style="margin-top:24px; display:flex; gap:12px;">
+      <a href="/" class="search-btn" style="text-decoration:none;">Continuar comprando</a>
+      <a href="/user" class="search-btn" style="text-decoration:none;">Minha conta</a>
+    </div>
+  </div>
+  </main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

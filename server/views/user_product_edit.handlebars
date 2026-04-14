@@ -1,0 +1,30 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Editar produto</span>
+      <a href="/user/products" class="search-btn" style="text-decoration:none;">Meus produtos</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container" style="max-width:640px;">
+    <h2 class="section-title">{{product.title}}</h2>
+    {{#if error}}
+      <div style="background:#ffecec;color:#b00000;padding:10px;border-radius:6px;margin-bottom:10px;">{{error}}</div>
+    {{/if}}
+    <form action="/user/products/{{product.id}}/update" method="post" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:12px;">
+      <input type="text" name="title" value="{{product.title}}" placeholder="Título" class="search-input" required>
+      <input type="number" step="0.01" name="price" value="{{product.price}}" placeholder="Preço" class="search-input" required>
+      <input type="number" name="discount" value="{{product.discount}}" placeholder="Desconto (%)" class="search-input" required>
+      <input type="file" name="image" accept="image/*" class="search-input">
+      <textarea name="description" placeholder="Descrição (opcional)" class="search-input" style="min-height:120px;">{{product.description}}</textarea>
+      <button type="submit" class="search-btn">Salvar</button>
+    </form>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

@@ -1,0 +1,70 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <span class="search-btn" style="cursor:default;">Olá, {{user}}</span>
+      <a href="/logout" class="search-btn" style="text-decoration:none;">Sair</a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container" style="max-width:960px;">
+    <h2 class="section-title">Listas de presentes</h2>
+    <form action="/user/gifts" method="post" style="display:flex; gap:8px; margin-bottom:12px;">
+      <input type="text" name="title" placeholder="Nome da lista" class="search-input" required>
+      <button type="submit" class="search-btn">Criar lista</button>
+    </form>
+    {{#if lists.length}}
+    <div style="display:grid; grid-template-columns: 1fr; gap:16px;">
+      {{#each lists}}
+      <div class="product-card">
+        <div class="product-title">{{this.title}}</div>
+        <form action="/user/gifts/{{this.id}}/items" method="post" style="display:flex; gap:8px; margin:8px 0 12px 0;">
+          <input type="text" class="search-input giftFilter" placeholder="Filtrar produtos" style="max-width:300px;" data-select-filter-for="giftSelect-{{this.id}}">
+          <input type="text" class="search-input giftAC" placeholder="Buscar e selecionar" style="max-width:300px;" list="giftProductsList" data-select-for="giftSelect-{{this.id}}">
+          <datalist id="giftProductsList">
+            {{#each ../products}}
+              <option value="{{this.title}}"></option>
+            {{/each}}
+          </datalist>
+          <select id="giftSelect-{{this.id}}" name="product_id" class="search-input giftProductSelect" style="max-width:300px;">
+            {{#each ../products}}
+              <option value="{{this.id}}">{{this.title}}</option>
+            {{/each}}
+          </select>
+          <input type="number" name="quantity" placeholder="Qtd" min="1" class="search-input" style="max-width:120px;" required>
+          <button type="submit" class="search-btn">Adicionar item</button>
+        </form>
+        {{#if this.items.length}}
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;">
+          {{#each this.items}}
+          <div class="product-card" style="display:grid; grid-template-columns: 80px 1fr auto; gap:8px; align-items:center;">
+            {{#if this.product}}
+            <img src="{{this.product.image}}" alt="{{this.product.title}}" style="width:80px; height:80px; object-fit:cover; border-radius:8px;">
+            {{/if}}
+            <div>
+              <div class="product-title">{{#if this.product}}{{this.product.title}}{{/if}}</div>
+              <div class="product-discount">Qtd: {{this.quantity}}</div>
+            </div>
+            <form action="/user/gifts/items/{{this.id}}/delete" method="post">
+              <button class="search-btn">Remover</button>
+            </form>
+          </div>
+          {{/each}}
+        </div>
+        {{else}}
+        <p style="color:#777;">Sem itens.</p>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p style="color:#777;">Você ainda não criou listas de presentes.</p>
+    {{/if}}
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>

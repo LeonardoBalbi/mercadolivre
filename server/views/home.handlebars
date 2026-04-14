@@ -1,0 +1,57 @@
+<header class="header">
+  <div class="container">
+    <div class="search-container">
+      <img alt="logo-mercado-livre" class="logo" src="https://http2.mlstatic.com/D_NQ_NP_758782-MLA78816706095_082024-F.jpg">
+      <input type="text" id="searchInput" placeholder="Buscar produtos... " class="search-input">
+      <button id="searchBtn" class="search-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <a href="/admin/customers/new" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-user-plus"></i>
+        Criar conta
+      </a>
+      <a href="/admin/customers" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-users"></i>
+        Lista de clientes
+      </a>
+      
+      <a href="/login" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        Entre
+      </a>
+      <a href="/cart" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-cart-shopping"></i>
+        Carrinho
+      </a>
+      <a href="/user" class="search-btn" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-bag-shopping"></i>
+        Compras
+      </a>
+    </div>
+  </div>
+  </header>
+
+<section class="hero">
+  <h1>Ofertas Imperdíveis</h1>
+  <p>Black Friday Ta Gostosin</p>
+</section>
+
+<main class="main">
+  <div class="container">
+    <h2 class="section-title">Ofetas do dia</h2>
+    <div class="products-grid" id="productsGrid">
+      {{#each products}}
+      <a href="/products/{{this.id}}" class="product-card" style="text-decoration:none;color:inherit;">
+        <img src="{{this.image}}" alt="{{this.title}}" class="product-image">
+        <h3 class="product-title">{{this.title}}</h3>
+        <div class="product-price">{{formatBRL this.price}}</div>
+        <div class="product-discount">{{this.discount}}% OFF</div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Clone do Mercado Livre - Oficial DevClub</p>
+</footer>
